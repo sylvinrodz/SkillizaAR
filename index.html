@@ -9,6 +9,7 @@
     <title>Skilliza</title>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.5.5/aframe/build/aframe-ar.js"></script>
+    <script src="https://rawgit.com/mayognaise/aframe-gif-shader/master/dist/aframe-gif-shader.min.js"></script>
     <script>
          // Invitation Video Handler
             
@@ -54,7 +55,7 @@
         <a-marker id="marker1" type="pattern" url="markers/invi-pattern-marker.patt" >
           
             <a-plane id="img-map"  height="1.2" width="2.76"  position="0 0.1 0" rotation="-90 0 0"
-                material="transparent:true;src:#map-point"></a-plane>
+                material="shader:gif;src:#map-point"></a-plane>
                 <!-- <a-plane color="#CCC" height="1.2" width="2.76" rotation="-90 0 0"></a-plane> -->
         </a-marker>
 
