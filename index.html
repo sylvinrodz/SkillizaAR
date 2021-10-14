@@ -1,20 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, iheight=device-height">
-    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, iheight=device-height" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
     <title>Skilliza</title>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.5.5/aframe/build/aframe-ar.js"></script>
+    <script>
+         // Invitation Video Handler
+            
+         AFRAME.registerComponent('video-vidhandler', {
+                init: function() {
+		    console.log('video init entered');
+                    this.toggle = false;
+                    this.vid = document.querySelector("#invitation");
+                    this.vid.pause();
+                },
+                tick: function() {
+                    if (this.el.object3D.visible == true) {
+                        if (!this.toggle) {
+                            this.toggle = true;
+                            this.vid.play();
+                        }
+                    } else {
+                        this.toggle = false;
+                        this.vid.pause();
+                    }
+                }
+            });
+    </script>
 </head>
-<body style='margin : 0px; overflow: hidden;'>
-    <a-scene embedded arjs>
-      <!-- create your content here. just a box for now -->
-      <a-box position='0 0.5 0' material='opacity: 0.5;'></a-box>
-      <!-- define a camera which will move according to the marker position -->
-      <a-marker-camera preset='hiro'></a-marker-camera>
+
+<body>
+    <a-scene id="scene" arjs="trackingMethod: best; debugUIEnabled: false;" vr-mode-ui="enabled: false" ar-template>
+        <a-assets>
+            <!-- Invitation  Video -->
+
+            <video preload="none" id="invitation" response-type="arraybuffer" loop="false" crossorigin playsinline
+                controls>
+                <source src="videos/invitation.mp4" />
+            </video>
+
+            <!-- Map point Image -->
+
+            <img id="map-point" src="images/map-navigate.jpg" />
+        </a-assets>
+
+        <!-- Invitation Video Marker -->
+
+        <a-marker id="marker1" type="pattern" url="markers/invi-pattern-marker.patt" video-vidhandler>
+          
+            <a-plane id="img-map" scale="2 2" position="0 0.1 0" rotation="-90 0 0"
+                material="transparent:true;src:#invitation"></a-plane>
+           
+        </a-marker>
+
+        <!-- Camera -->
+
+        <a-entity camera></a-entity>
     </a-scene>
-  </body>
+</body>
+
 </html>
